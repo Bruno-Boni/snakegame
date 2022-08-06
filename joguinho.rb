@@ -35,7 +35,7 @@ class Snake
     end
 
     def grow
-        @start_positions.push([head[0]+1, head[1]])
+        @start_positions.push([head[0], head[1]])
     end
 
     def x 
