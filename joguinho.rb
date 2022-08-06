@@ -24,13 +24,13 @@ class Snake
         @start_positions.shift
         case @direction
         when "down"
-            @start_positions.push([head[0], head[1]+1])
+            @start_positions.push(coordin_limitation(head[0], head[1]+1))
         when "up"
-            @start_positions.push([head[0], head[1]-1])
+            @start_positions.push(coordin_limitation(head[0], head[1]-1))
         when "left"
-            @start_positions.push([head[0]-1, head[1]])
+            @start_positions.push(coordin_limitation(head[0]-1, head[1]))
         when "right"
-            @start_positions.push([head[0]+1, head[1]])
+            @start_positions.push(coordin_limitation(head[0]+1, head[1]))
         end
     end
 
@@ -52,7 +52,8 @@ class Snake
         @start_positions.last
     end 
 
-    def coordin_limitation
+    def coordin_limitation(x, y)
+        [x % SCREEN_WIDTH, y % SCREEN_HEIGHT]
     end
 end
 
