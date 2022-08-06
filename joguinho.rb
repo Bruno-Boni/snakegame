@@ -94,8 +94,13 @@ class Game
         @finished 
     end
 
-    def text_message 
+    def start_screen_message 
         Text.new("O seu score atual é: #{@score}", color: 'green', x: 10, y: 10, size: 25, z: 1)
+    end
+
+    def gameover_message 
+        Text.new("Game Over! O seu score final foi de: #{@score}", color: "green", x: 10, y: 10, size: 25, z:1)
+        Text.new("Pressione R para continuar!", color: "green", x:10, y: 50, size: 25, z:1)
     end
         
 end
@@ -118,16 +123,23 @@ update do
         game.record_hit
         snake.grow 
     end
-    game.text_message
+    game.start_screen_message
     if snake.hit_itself? 
         game.finish
+        clear
+        game.gameover_message
     end
 end
 
 #Keyboard keys 
-on :key_down do |events|
-    if ["left", "right", "up", "down"].include?(events.key)
-        snake.direction = events.key 
+on :key_down do |event|
+    if ["left", "right", "up", "down"].include?(event.key)
+        snake.direction = event.key 
+    end
+
+    if game.finished? && event.key == "r"
+        snake = Snake.new 
+        game = Game.new
     end
 end 
 
