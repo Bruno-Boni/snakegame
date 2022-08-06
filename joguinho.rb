@@ -12,7 +12,6 @@ class Snake
     def initialize
         @start_positions = [[2,0], [2,1], [2,2], [2,3]]
         @direction = 'down'
-        @growing = false
     end
 
     def create 
@@ -36,7 +35,7 @@ class Snake
     end
 
     def grow
-        @growing = true
+        @start_positions.push([head[0]+1, head[1]])
     end
 
     def x 
