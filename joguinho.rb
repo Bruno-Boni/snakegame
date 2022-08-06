@@ -10,6 +10,7 @@ SCREEN_HEIGHT = Window.height / SQUARE_SIZE
 class Snake 
     def initialize 
         @start_positions = [[2,0], [2,1], [2,2], [2,3]]
+        @direction = 'down'
     end
 
     def create 
@@ -19,6 +20,11 @@ class Snake
     end 
 
     def move 
+        @start_positions.shift
+        case @direction
+        when "down"
+            @start_positions.push([head[0], head[1]+1])
+        end
     end
 
     def grow
@@ -27,6 +33,7 @@ class Snake
     private 
 
     def head 
+        @start_positions.last
     end 
 
     def coordinates 
@@ -56,6 +63,7 @@ game = Game.new
 update do 
     clear 
     snake.create 
+    snake.move
 end
 
 #Keyboard keys 
