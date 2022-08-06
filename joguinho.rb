@@ -66,7 +66,6 @@ class Game
 
     def record_hit
         @score +=1
-        puts @score
     end
 
     def food 
@@ -82,6 +81,9 @@ class Game
     def finish_game?
     end
 
+    def text_message 
+        Text.new("O seu score atual é: #{@score}", color: 'green', x: 10, y: 10, size: 25, z: 1)
+    end
 end
 
 snake = Snake.new 
@@ -98,6 +100,7 @@ update do
         game.record_hit
         snake.grow 
     end
+    game.text_message
 end
 
 #Keyboard keys 
