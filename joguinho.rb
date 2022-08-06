@@ -13,6 +13,9 @@ class Snake
     end
 
     def create 
+        @start_positions.each do |position|
+            Square.new(x: position[0]*SQUARE_SIZE, y: position[1]*SQUARE_SIZE, size: SQUARE_SIZE-1, color: "white")
+        end
     end 
 
     def move 
@@ -51,6 +54,8 @@ game = Game.new
 
 #Snake and Game Actions
 update do 
+    clear 
+    snake.create 
 end
 
 #Keyboard keys 
