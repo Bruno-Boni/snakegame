@@ -46,6 +46,10 @@ class Snake
         head[1]
     end
 
+    def hit_itself?
+        @start_positions.uniq.length != @start_positions.length
+    end
+
     private 
 
     def head 
@@ -57,11 +61,12 @@ class Snake
     end
 end
 
-class Game
+class Game 
     def initialize
         @score = 0
         @x_food = 10 
         @y_food = 3
+        @finished = false
     end 
 
     def record_hit
@@ -81,12 +86,18 @@ class Game
         @x_food == x && @y_food == y 
     end
 
-    def finish_game?
+    def finish 
+        @finished = true 
+    end
+
+    def finished?
+        @finished 
     end
 
     def text_message 
         Text.new("O seu score atual é: #{@score}", color: 'green', x: 10, y: 10, size: 25, z: 1)
     end
+        
 end
 
 snake = Snake.new 
@@ -95,8 +106,11 @@ game = Game.new
 #Snake and Game Actions
 update do 
     clear 
-    snake.create 
-    snake.move
+    snake.create
+    unless game.finished? 
+        snake.move
+    end 
+
 
     game.food
     if game.snake_eat_food?(snake.x, snake.y)
@@ -105,6 +119,9 @@ update do
         snake.grow 
     end
     game.text_message
+    if snake.hit_itself? 
+        game.finish
+    end
 end
 
 #Keyboard keys 
