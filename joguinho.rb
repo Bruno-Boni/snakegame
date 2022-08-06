@@ -16,7 +16,7 @@ class Snake
 
     def create 
         @start_positions.each do |position|
-            Square.new(x: position[0]*SQUARE_SIZE, y: position[1]*SQUARE_SIZE, size: SQUARE_SIZE-1, color: "red")
+            Square.new(x: position[0]*SQUARE_SIZE, y: position[1]*SQUARE_SIZE, size: SQUARE_SIZE-1, color: "white")
         end
     end 
 
@@ -32,20 +32,19 @@ class Snake
         when "right"
             @start_positions.push(coordin_limitation(head[0]+1, head[1]))
         end
-    end
+    end 
 
     def grow
         case @direction 
         when "up"
-            @start_positions.push(@start_positions.first[1]+1)
+            @start_positions.unshift(@start_positions.first[1]+1)
         when "down"
-            @start_positions.push(@start_positions.first[1]-1)
+            @start_positions.unshift(@start_positions.first[1]-1)
         when "left"
-            @start_positions.push(@start_positions.first[0]-1)
+            @start_positions.unshift(@start_positions.first[0]-1)
         when "right"
-            @start_positions.push(@start_positions.first[0]+1)
+            @start_positions.unshift(@start_positions.first[0]+1)
         end
-
     end
 
     def x 
@@ -68,7 +67,6 @@ class Snake
         when 'right' then new_direction != 'left'
         end
     end
-    
 
     private 
 
@@ -94,7 +92,7 @@ class Game
     end
 
     def food 
-        Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "blue")
+        Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "yellow")
     end
 
     def change_food_position 
