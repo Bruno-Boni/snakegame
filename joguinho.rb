@@ -8,6 +8,7 @@ SCREEN_WIDTH = Window.width / SQUARE_SIZE
 SCREEN_HEIGHT = Window.height / SQUARE_SIZE
 
 class Snake 
+    attr_writer :direction
     def initialize 
         @start_positions = [[2,0], [2,1], [2,2], [2,3]]
         @direction = 'down'
@@ -74,6 +75,9 @@ end
 
 #Keyboard keys 
 on :key_down do |events|
+    if ["left", "right", "up", "down"].include?(events.key)
+        snake.direction = events.key 
+    end
 end
 
 
