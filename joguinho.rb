@@ -72,10 +72,13 @@ class Game
         Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "yellow")
     end
 
+    def change_food_position 
+        @x_food = rand(SCREEN_WIDTH)
+        @y_food = rand(SCREEN_HEIGHT)
+    end 
 
     def snake_eat_food?(x, y)
         @x_food == x && @y_food == y 
-        
     end
 
     def finish_game?
@@ -97,6 +100,7 @@ update do
 
     game.food
     if game.snake_eat_food?(snake.x, snake.y)
+        game.change_food_position
         game.record_hit
         snake.grow 
     end
