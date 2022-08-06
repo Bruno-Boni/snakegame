@@ -9,9 +9,10 @@ SCREEN_HEIGHT = Window.height / SQUARE_SIZE
 
 class Snake 
     attr_writer :direction
-    def initialize 
+    def initialize
         @start_positions = [[2,0], [2,1], [2,2], [2,3]]
         @direction = 'down'
+        @growing = false
     end
 
     def create 
@@ -35,6 +36,15 @@ class Snake
     end
 
     def grow
+        @growing = true
+    end
+
+    def x 
+        head[0]
+    end
+
+    def y 
+        head[1]
     end
 
     private 
@@ -47,7 +57,7 @@ class Snake
     end
 end
 
-class Game 
+class Game
     def initialize
         @score = 0
         @x_food = 10 
@@ -56,6 +66,7 @@ class Game
 
     def record_hit
         @score +=1
+        puts @score
     end
 
     def food 
@@ -63,11 +74,14 @@ class Game
     end
 
 
-    def snake_eat_food 
+    def snake_eat_food?(x, y)
+        @x_food == x && @y_food == y 
+        
     end
 
-    def finish_game
+    def finish_game?
     end
+
 end
 
 snake = Snake.new 
@@ -80,6 +94,10 @@ update do
     snake.move
 
     game.food
+    if game.snake_eat_food?(snake.x, snake.y)
+        game.record_hit
+        snake.grow 
+    end
 end
 
 #Keyboard keys 
@@ -87,8 +105,7 @@ on :key_down do |events|
     if ["left", "right", "up", "down"].include?(events.key)
         snake.direction = events.key 
     end
-end
-
+end 
 
 
 
