@@ -43,18 +43,25 @@ class Snake
         @start_positions.last
     end 
 
-    def coordinates 
+    def coordin_limitation
     end
 end
 
 class Game 
     def initialize
         @score = 0
+        @x_food = 10 
+        @y_food = 3
     end 
 
     def record_hit
         @score +=1
     end
+
+    def food 
+        Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "yellow")
+    end
+
 
     def snake_eat_food 
     end
@@ -71,6 +78,8 @@ update do
     clear 
     snake.create 
     snake.move
+
+    game.food
 end
 
 #Keyboard keys 
