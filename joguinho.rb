@@ -24,6 +24,12 @@ class Snake
         case @direction
         when "down"
             @start_positions.push([head[0], head[1]+1])
+        when "up"
+            @start_positions.push([head[0], head[1]-1])
+        when "left"
+            @start_positions.push([head[0]-1, head[1]])
+        when "right"
+            @start_positions.push([head[0]+1, head[1]])
         end
     end
 
