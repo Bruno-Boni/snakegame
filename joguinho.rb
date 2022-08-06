@@ -1,6 +1,6 @@
 require "ruby2d"
 
-set background: "black"
+set background: "#141414"
 set title: "Snake Game with Ruby"
 set fps_cap: 20
 SQUARE_SIZE = 20
@@ -11,12 +11,12 @@ class Snake
     attr_writer :direction
     def initialize
         @start_positions = [[2,0], [2,1], [2,2], [2,3]]
-        @direction = 'down'
+        @direction = 'down' 
     end
 
     def create 
         @start_positions.each do |position|
-            Square.new(x: position[0]*SQUARE_SIZE, y: position[1]*SQUARE_SIZE, size: SQUARE_SIZE-1, color: "white")
+            Square.new(x: position[0]*SQUARE_SIZE, y: position[1]*SQUARE_SIZE, size: SQUARE_SIZE-1, color: "red")
         end
     end 
 
@@ -35,7 +35,17 @@ class Snake
     end
 
     def grow
-        @start_positions.push([head[0], head[1]])
+        case @direction 
+        when "up"
+            @start_positions.push(@start_positions.first[1]+1)
+        when "down"
+            @start_positions.push(@start_positions.first[1]-1)
+        when "left"
+            @start_positions.push(@start_positions.first[0]-1)
+        when "right"
+            @start_positions.push(@start_positions.first[0]+1)
+        end
+
     end
 
     def x 
@@ -49,6 +59,16 @@ class Snake
     def hit_itself?
         @start_positions.uniq.length != @start_positions.length
     end
+
+    def can_change_direction_to?(new_direction)
+        case @direction
+        when 'up' then new_direction != 'down'
+        when 'down' then new_direction != 'up'
+        when 'left' then new_direction != 'right'
+        when 'right' then new_direction != 'left'
+        end
+    end
+    
 
     private 
 
@@ -74,7 +94,7 @@ class Game
     end
 
     def food 
-        Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "yellow")
+        Square.new(x: @x_food*SQUARE_SIZE, y: @y_food*SQUARE_SIZE, size: SQUARE_SIZE, color: "blue")
     end
 
     def change_food_position 
@@ -134,7 +154,9 @@ end
 #Keyboard keys 
 on :key_down do |event|
     if ["left", "right", "up", "down"].include?(event.key)
-        snake.direction = event.key 
+        if snake.can_change_direction_to?(event.key)
+            snake.direction = event.key
+          end      
     end
 
     if game.finished? && event.key == "r"
