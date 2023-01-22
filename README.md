@@ -1,4 +1,4 @@
-# SnakeGame
+# Snake Game
 Um jogo de cobrinha feito usando Ruby.
 
 
